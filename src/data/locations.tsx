@@ -9,7 +9,7 @@ export const locationsBirmingham: SnowballFight[] = [
     },
     date: new Date(2024, 12, 26, 7, 45, 0),
     name: "Los Tacos",
-    description: "Secret snowboard fight event",
+    description: "Secret snowball fight event",
   },
 
   {
@@ -20,7 +20,7 @@ export const locationsBirmingham: SnowballFight[] = [
     },
     date: new Date(2024, 12, 26, 9, 30, 0),
     name: "Hall Academy",
-    description: "Academy for the best snowboarders fighters",
+    description: "Academy for the best snowball fighters",
   },
 
   {
@@ -31,7 +31,7 @@ export const locationsBirmingham: SnowballFight[] = [
     },
     date: new Date(2024, 12, 26, 11, 45, 0),
     name: "Hall Green Station",
-    description: "Trains and snowboard fights",
+    description: "Trains and snowball fights",
   },
 
   {
@@ -42,7 +42,7 @@ export const locationsBirmingham: SnowballFight[] = [
     },
     date: new Date(2024, 12, 26, 13, 45, 0),
     name: "Kelly's Dharma Dogs",
-    description: "Dogs snowboard",
+    description: "Dogs and snowballs",
   },
 
   {
@@ -53,7 +53,7 @@ export const locationsBirmingham: SnowballFight[] = [
     },
     date: new Date(2024, 12, 26, 20, 45, 0),
     name: "Recycling Lives",
-    description: "Recycling fights",
+    description: "Recycling snowballs",
   },
 
   {

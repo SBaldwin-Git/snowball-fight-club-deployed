@@ -1,48 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import { Cards, Footer, Header, Main } from "components/css";
+import { SidebarList } from "components/sidebarlist/sidebar-list";
+import { Box } from "@mui/material";
 import useGeolocation from "react-hook-geolocation";
 import { Icon } from "leaflet";
+import { Stack } from "@mui/material";
 import { locationsBirmingham } from "data/locations";
-// import 
+import { FightMarkerList } from "../components/css/marker/fight-marker-list";
+import { IntroModal } from "components/css/modal/intro-modal";
+import { SnowballFight } from "data/event";
 
 const Home: React.FC = () => {
   const data = useGeolocation();
+  const [currentFight, setCurrentFight] = useState<SnowballFight>(null);
+
   const position = {
     lat: data.latitude,
     lng: data.longitude,
   };
 
-  const hardCodedposition = {
-    lat: 52.51448497786845,
-    lng: -1.9089501066552415,
-  };
-
   if (data.error) {
-    return <div>Bah humbug give me your location :(</div>;
+    return (
+      <div>
+        Bah humbug give me your location :({" "}
+        <img
+          src="icons/Bah-humbug-or-not-1.webp"
+          alt="Girl in a jacket"
+          width="800"
+          height="600"
+        />
+      </div>
+    );
   }
   if (!data.latitude || !data.latitude) {
-    return <div>Hold on scrooge is thinking .......</div>;
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <h1>Hold on scrooge is thinking .......</h1>
+        <img
+          src="icons/fea_19scroogecorr_12-19-2009_AHHJS95.webp"
+          alt="Girl in a jacket"
+          width="800"
+          height="600"
+        />
+      </Box>
+    );
   }
-
-  {locationsBirmingham.map((fight) => <FightMarker key={fight.id} fight={fight}/>)}
-
-
-  
-  const snowflakeIcon = new Icon({
-    iconUrl: "icons/snowflake-round-svgrepo-com.svg",
-    // iconUrl: "icons/snowflake-svgrepo-com(1).svg",
-    // iconUrl:"icons/snowflake-svgrepo-com.svg",
-    iconSize: [50, 50], // size of the icon
-    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-  });
 
   const userLocationIcon = new Icon({
     iconUrl: "icons/christmas-tree-christmas-svgrepo-com.svg",
-    iconSize: [50, 50], // size of the icon
-    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-    popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+    iconSize: [50, 50],
+    iconAnchor: [22, 94],
+    popupAnchor: [-3, -76],
   });
 
   return (
@@ -54,24 +68,34 @@ const Home: React.FC = () => {
       }}
     >
       <Header />
-      <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+      <Stack direction="row" spacing={0}>
+        <SidebarList
+          fights={locationsBirmingham}
+          setCurrentFight={setCurrentFight}
+          currentFight={currentFight}
         />
-        <Marker position={position} icon={userLocationIcon}>
-          <Popup>
-            You are here. <br /> God luck in your snowball fight club.
-          </Popup>
-        </Marker>
-        <Marker position={hardCodedposition} icon={snowflakeIcon}>
-          <Popup>
-            there is a fight here!. <br /> God luck in your snowball fight club.
-          </Popup>
-        </Marker>
-      </MapContainer>
+
+        <IntroModal />
+        <MapContainer center={position} zoom={10} scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={position} icon={userLocationIcon}>
+            <Popup>
+              You are here. <br /> God luck in your snowball fight club.
+            </Popup>
+          </Marker>
+          <FightMarkerList
+            fights={locationsBirmingham}
+            setCurrentFight={setCurrentFight}
+            currentFight={currentFight}
+          />
+        </MapContainer>
+      </Stack>
       <Main />
-      <Cards />
+
       <Footer />
     </div>
   );

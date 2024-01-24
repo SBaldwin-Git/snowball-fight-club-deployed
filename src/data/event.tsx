@@ -1,4 +1,4 @@
-export interface SnowballFight {
+export interface  SnowballFight {
   id: string;
   position: {
     long: number;
